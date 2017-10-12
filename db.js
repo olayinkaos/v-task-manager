@@ -21,7 +21,7 @@ mongoose.model( 'Project', Project );
 // task model schema
 let Task = new Schema();
 Task.add({
-	content : { type: String, required: true, unique: true, uniqueCaseInsensitive: true },
+	content : { type: String, required: true},
 	project: { type: Schema.Types.ObjectId, ref: 'Project' },
 	priority: {type: Number, min: 1, max: 5},
 	dueDate: { type: Date },

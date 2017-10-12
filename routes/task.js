@@ -33,14 +33,21 @@ router.get('/', (req, res, next) => {
 // save new task
 .post('/', (req, res, next) => {
 	let params = req.body;
-	new Task(params).save((err, task, count) => {
-		Project.findById(task.project, (err, project) => {
-			if (err) next;
-			project.completed = false;
-			project.save((err, project) => {
-				req.flash('success', 'Task successfully added!')
-				res.redirect("/task");
-			})
+	Task.findOne({ name: params.name, project: params.project }, (err, task) => {
+		if(task) {
+			req.flash('error', `Task "${task.content}" already exists in this project!`);
+			res.redirect("/task");
+			return;
+		}
+		new Task(params).save((err, task, count) => {
+			Project.findById(task.project, (err, project) => {
+				if (err) next;
+				project.completed = false;
+				project.save((err, project) => {
+					req.flash('success', 'Task successfully added!')
+					res.redirect("/task");
+				})
+			});
 		});
 	});
 })
@@ -48,6 +55,12 @@ router.get('/', (req, res, next) => {
 .post('/:id/subtask', (req, res, next) => {
 	let params = req.body;
 	Task.findById(req.params.id, (err, task) => {
+		let exists = task.subtasks.find(t => t.content == params.content);
+		if (exists) {
+			req.flash('error', `Subtask ${exists.content} already exists in this task!`);
+			res.redirect("/task");
+			return;
+		}
 		task.subtasks.push(params);
 		task.save((err, task, count) => {
 			if (err) next;
