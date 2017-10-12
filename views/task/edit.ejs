@@ -1,0 +1,87 @@
+<% layout( '../layouts/master' ) -%>
+
+<section class="section">
+	<div class="columns">
+		<div class="column is-offset-one-quarter is-half">
+			<nav class="breadcrumb" aria-label="breadcrumbs">
+				<ul>
+					<li><a href="/">Projects</a></li>
+					<li><a href="/task">Tasks</a></li>
+					<li><a href="/task/<%= task._id %>"><%= task.content %></a></li>
+					<li class="is-active"><a href="#" aria-current="page">Edit</a></li>
+				</ul>
+			</nav>
+
+			<form action="/task/<%= task._id %>" method="POST">
+				
+				<div class="field">
+					<label class="label">Task <span>*</span></label>
+					<div class="control">
+						<input name="content" class="input" type="text" value="<%= task.content %>" placeholder="Task" required>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="label">Project <span>*</span></label>
+					<div class="control">
+						<div class="select">
+							<select name="project" id="project" required>
+								<option value="" disabled="" selected="">Select a project</option>
+								<% projects.forEach( project => { -%>
+								<option value="<%= project._id %>" <%= task.project.equals(project._id) ? "selected" : "" %>>
+									<%= project.name %>
+								</option>
+								<% }) -%>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="field">
+					<p class="label"><strong>Priority <span>*</span></strong></p>
+					<div class="control">
+						<label class="radio">
+							<input type="radio" name="priority" value="1" 
+								<%= task.priority == 1 ? 'checked' : '' %>
+								required> 1
+						</label>
+						<label class="radio">
+							<input type="radio" name="priority" value="2" 
+								<%= task.priority == 2 ? 'checked' : '' %>
+								required> 2
+						</label>
+						<label class="radio">
+							<input type="radio" name="priority" value="3" 
+								<%= task.priority == 3 ? 'checked' : '' %>
+								required> 3
+						</label>
+						<label class="radio">
+							<input type="radio" name="priority" value="4" 
+								<%= task.priority == 4 ? 'checked' : '' %>
+								required> 4
+						</label>
+						<label class="radio">
+							<input type="radio" name="priority" value="5" 
+								<%= task.priority == 5 ? 'checked' : '' %>
+								required> 5
+						</label>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="label">Due Date</label>
+					<div class="control">
+						<input value="<%= moment(task.dueDate).format('YYYY-MM-DD') %>" class="input" type="date" placeholder="Due Date" name="dueDate">
+					</div>
+				</div>
+
+				<div class="field is-grouped is-grouped-right">
+					<p class="control">
+						<button type="submit" class="button is-primary">Submit</button>
+					</p>
+				</div>
+
+			</form>
+		</div>
+	</div>	
+</section>

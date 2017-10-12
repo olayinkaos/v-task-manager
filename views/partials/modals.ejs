@@ -1,0 +1,33 @@
+<!-- add project modal -->
+<div id="add-project-modal" class="modal animated fadeIn fast">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">
+        Create Project
+      </p>
+      <button class="delete remove" aria-label="close"></button>
+    </header>
+    <form action="/project" method="POST">
+      <section class="modal-card-body">
+
+        <div class="field">
+          <label class="label">Name <span>*</span></label>
+          <div class="control">
+            <input name="name" class="input" type="text" placeholder="Project name" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="description">Description</label>
+          <textarea class="textarea" name="description" id="description" rows="4"></textarea>
+        </div>
+
+      </section>
+      <footer class="modal-card-foot">
+        <button type="submit" class="button is-success">Save changes</button>
+        <button class="button remove">Cancel</button>
+      </footer>
+    </form>
+  </div>
+</div>

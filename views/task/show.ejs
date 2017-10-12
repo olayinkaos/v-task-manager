@@ -1,0 +1,31 @@
+<% layout( '../layouts/master' ) -%>
+
+<section class="section">
+  <div class="columns">
+    <div class="column">
+
+      <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li><a href="/">Projects</a></li>
+          <li><a href="/task">Tasks</a></li>
+          <li class="is-active"><a href="/task/<%= task._id %>" aria-current="page"><%= task.content %></a></li>
+        </ul>
+      </nav>
+
+      <h1 class="title">
+        Task: <%= task.content %>
+        <% if (task.completed) { -%>
+          <span class="tag is-success">completed</span>
+        <% } else { -%>
+          <span class="tag is-warning">not completed</span>
+        <% } -%>
+      </h1>
+      <h5 class="subtitle">
+        <strong><%= task.subtasks.length %></strong> subtasks
+      </h5>
+
+
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,59 @@
+body {
+	padding: 30px;
+	/*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+}
+
+a {
+	/*color: #00B7FF;*/
+}
+
+.navbar-item .button {
+	margin: 0 10px;
+}
+.navbar-brand h1 {
+	font-size: 1.5em
+}
+
+.label span {
+	color: red;
+}
+.title .muted a {
+	color: grey !important;
+	opacity: 0.35;
+}
+
+.notification.flash {
+	margin: 12px 0;
+}
+
+.all-tasks #subtasks {
+	width: 300px;
+}
+
+.subtask-modal .modal-card {
+	min-width: 65%
+}
+
+td {
+	position: relative;
+}
+
+tr.strikeout td:before {
+	content: " ";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	border-bottom: 2px solid #4a4a4a;
+	width: 100%;
+	z-index: 9999
+}
+
+.strikethrough {
+	text-decoration: line-through;
+}
+
+#filter-tasks form {
+	display: flex;
+	width: 100%;
+	margin: 10px 0 40px;
+}

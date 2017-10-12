@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title ? `${title} - ` : '' %>V Task Manager</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
+  <link rel="stylesheet" href="/stylesheets/animate.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation" style="border-bottom: 1px solid #eee">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <h1>vTask<strong>Manager</strong></h1><br>
+        </a>
+      </div>
+
+      <div class="navbar-menu">
+        <!-- navbar start, navbar end -->
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="button is-large modal-trigger" data-target="add-project-modal">
+              Create Project
+            </a>
+            <a class="button is-large is-primary" href="/task/create">
+              Add Task
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+  </nav>
+  
+  <div class="container">
+
+    <!-- flash messages partial -->
+    <%- include ../partials/flash.ejs %>
+    
+    <!-- body is injected into the layout -->
+    <%- body %>
+  </div>
+
+  <!-- modals -->
+  <% include ../partials/modals.ejs -%>
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.0/moment.min.js"></script>
+  <script src="/javascripts/app.js"></script>
+</body>
+</html>

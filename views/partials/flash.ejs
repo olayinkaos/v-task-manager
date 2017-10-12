@@ -1,0 +1,22 @@
+<% if(typeof flash !== 'undefined') { %>
+<% if (flash.success.length > 0) { -%>
+<div class="notification is-success flash animated fadeIn">
+	<button class="delete"></button>
+	<%= flash.success %>
+</div>
+<% } -%>
+
+<% if (flash.info.length > 0) { -%>
+<div class="notification is-info flash animated fadeIn">
+	<button class="delete"></button>
+	<%= flash.info %>
+</div>
+<% } -%>
+
+<% if (flash.error.length > 0) { -%>
+<div class="notification is-danger flash animated fadeIn">
+	<button class="delete"></button>
+	<%= flash.error %>
+</div>
+<% } -%>
+<% } -%>

@@ -1,0 +1,76 @@
+<% layout( '../layouts/master' ) -%>
+
+<section class="section">
+	<div class="columns">
+		<div class="column is-offset-one-quarter is-half">
+			<nav class="breadcrumb" aria-label="breadcrumbs">
+				<ul>
+					<li><a href="/">Projects</a></li>
+					<li><a href="/task">Tasks</a></li>
+					<li class="is-active"><a href="#" aria-current="page">Create Task</a></li>
+				</ul>
+			</nav>
+
+			<form action="/task" method="POST">
+				
+				<div class="field">
+					<label class="label">Task <span>*</span></label>
+					<div class="control">
+						<input name="content" class="input" type="text" placeholder="Task" required>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="label">Project <span>*</span></label>
+					<div class="control">
+						<div class="select">
+							<select name="project" id="project" required>
+								<option value="" disabled="" selected="">Select a project</option>
+								<% projects.forEach( project => { -%>
+								<option value="<%= project._id %>">
+									<%= project.name %>
+								</option>
+								<% }) -%>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="field">
+					<p class="label"><strong>Priority <span>*</span></strong></p>
+					<div class="control">
+						<label class="radio">
+							<input type="radio" name="priority" value="1" checked required> 1
+						</label>
+						<label class="radio">
+							<input type="radio" name="priority" value="2" required> 2
+						</label>
+						<label class="radio">
+							<input type="radio" name="priority" value="3" required> 3
+						</label>
+						<label class="radio">
+							<input type="radio" name="priority" value="4" required> 4
+						</label>
+						<label class="radio">
+							<input type="radio" name="priority" value="5" required> 5
+						</label>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="label">Due Date</label>
+					<div class="control">
+						<input class="input" type="date" placeholder="Due Date" name="dueDate">
+					</div>
+				</div>
+
+				<div class="field is-grouped is-grouped-right">
+					<p class="control">
+						<button type="submit" class="button is-primary">Submit</button>
+					</p>
+				</div>
+
+			</form>
+		</div>
+	</div>	
+</section>
