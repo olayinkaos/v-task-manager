@@ -15,14 +15,200 @@
       <h1 class="title">
         Task: <%= task.content %>
         <% if (task.completed) { -%>
-          <span class="tag is-success">completed</span>
+        <span class="tag is-success">completed</span>
         <% } else { -%>
-          <span class="tag is-warning">not completed</span>
+        <span class="tag is-warning">not completed</span>
         <% } -%>
       </h1>
       <h5 class="subtitle">
-        <strong><%= task.subtasks.length %></strong> subtasks
+        <strong><%= task.subtasks.length %></strong> subtask(s)
       </h5>
+
+      <div class="columns">
+        <div class="column">
+          <h4 class="title is-5">INFO</h4>
+
+          <p><%= task.content %></p>
+          <ul>
+            <li><strong>Due Date</strong>: <%= moment(task.dueDate).format('MMM Do YYYY') %></li>
+            <li><strong>Date Created</strong>: <%= moment(task.createdAt).format('MMM Do YYYY') %></li>
+          </ul>
+
+          <br>
+          <a href="/task/<%= task._id %>/edit" class="button">Edit Task</a>
+          <% if (!task.completed) { -%>
+          <a href="/task/<%= task._id %>/status?s=complete" class="button is-success" title="mark as completed">
+            <span class="fa fa-check"></span> 
+            Mark as complete
+          </a>
+          <% } else { -%>
+          <a href="/task/<%= task._id %>/status?s=uncomplete" class="button is-danger" title="mark as uncompleted">
+            <span class="fa fa-times"></span> 
+            Mark as incomplete
+          </a>
+          <% } -%>
+
+        </div>
+
+        <div class="column is-three-quarters">
+
+          <h4 class="title is-5">SUBTASKS</h4>
+
+          <div class="has-text-right">
+            <button class="button is-info add-subtask">Add Subtask</button>
+            <button class="button is-danger is-hidden remove-add-subtask"><span class="fa fa-times"></span></button>
+          </div>
+          <div class="add-subtask-form is-hidden">
+            <form action="/task/<%= task._id %>/subtask" method="POST">
+
+              <div class="field">
+                <label class="label">Task <span>*</span></label>
+                <div class="control">
+                  <input name="content" class="input" type="text" placeholder="Task" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <p class="label"><strong>Priority <span>*</span></strong></p>
+                <div class="control">
+                  <label class="radio">
+                    <input type="radio" name="priority" value="1" checked required> 1
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="priority" value="2" required> 2
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="priority" value="3" required> 3
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="priority" value="4" required> 4
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="priority" value="5" required> 5
+                  </label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Due Date</label>
+                <div class="control">
+                  <input class="input" type="date" placeholder="Due Date" name="dueDate">
+                </div>
+              </div>
+
+              <div class="field is-grouped is-grouped-right">
+                <p class="control">
+                  <button type="submit" class="button is-primary">Submit</button>
+                </p>
+              </div>
+            </form>
+
+          </div>
+
+
+
+          <div class="edit-subtask-form is-hidden">
+            <form action="/task/<%= task._id %>/subtask/update" method="POST">
+              <input type="hidden" name="subtask_id">
+
+              <div class="field">
+                <label class="label">Task <span>*</span></label>
+                <div class="control">
+                  <input name="content" class="input" type="text" placeholder="Task" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <p class="label"><strong>Priority <span>*</span></strong></p>
+                <div class="control">
+                  <label class="radio">
+                    <input type="radio" name="priority" value="1" required> 1
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="priority" value="2" required> 2
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="priority" value="3" required> 3
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="priority" value="4" required> 4
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="priority" value="5" required> 5
+                  </label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Due Date</label>
+                <div class="control">
+                  <input class="input" type="date" placeholder="Due Date" name="dueDate">
+                </div>
+              </div>
+
+              <div class="field is-grouped is-grouped-right">
+                <p class="control">
+                  <button type="submit" class="button is-primary">Submit</button>
+                </p>
+              </div>
+            </form>
+
+          </div>
+
+          <div class="subtask-table">
+            <table class="table" style="width:100%">
+              <thead>
+                <tr>
+                  <th>S/N</th>
+                  <th>Task</th>
+                  <th>Priority</th>
+                  <th>Due Date</th>
+                  <th>Created At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% task.subtasks.forEach( (t, index) => { -%>
+
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td <%= t.completed ? 'class=strikethrough' : '' %>><%= t.content %></td>
+                  <td><%= t.priority %></td>
+                  <td><%= t.dueDate.toLocaleDateString() %></td>
+                  <td><%= moment(t._id.getTimestamp()).format('MMM Do YYYY, h:mm:ss a') %></td>
+                  <td>
+                    <!-- edit button -->
+                    <a href="#" 
+                    data-id="<%= t._id %>" data-content="<%= t.content %>" data-duedate="<%= moment(t.dueDate).format('YYYY-MM-DD') %>"
+                    data-priority="<%= t.priority %>"
+                    class="button is-small edit-subtask-btn">Edit</a>
+
+                    <!-- status change button -->
+                    <% if (!t.completed) { -%>
+                    <a href="/task/<%= task._id %>/subtask/<%= t._id %>/status?s=complete" class="button is-small is-success" title="mark as completed">
+                      <span class="fa fa-check"></span>
+                    </a>
+                    <% } else { -%>
+                    <a href="/task/<%= task._id %>/subtask/<%= t._id %>/status?s=uncomplete" class="button is-small is-danger" title="mark as uncompleted">
+                      <span class="fa fa-times"></span>
+                    </a>
+                    <% } -%>
+
+                    <!-- delete task button -->
+                    <a href="/task/<%= task._id %>/subtask/<%= t._id %>/destroy"
+                      data-confirm="Are you sure you want to delete subtask '<%= t.content %>'?"
+                      class="button is-small is-danger is-outlined">
+                      <span class="fa fa-trash"></span>
+                    </a>
+                  </td>
+                </tr>
+                <% }) -%>
+              </tbody>
+            </table>        
+          </div>
+
+        </div>
+      </div>
 
 
     </div>

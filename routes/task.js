@@ -115,7 +115,7 @@ router.get('/', (req, res, next) => {
 		task.save((err, task, count) => {
 			if(err) next;
 			req.flash('success', 'Subtask successfully updated!')
-			res.redirect("/task");
+			res.redirect(`/task/${task.id}`);
 		})
 	});
 })
@@ -130,7 +130,7 @@ router.get('/', (req, res, next) => {
 		task.save((err, task, count) => {
 			if(err) next;
 			req.flash('info', `Task ${task._id} updated`);
-			res.redirect(`/task`);
+			res.redirect(`/task/${task.id}`);
 		});
 	});
 })

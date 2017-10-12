@@ -74,7 +74,7 @@
                 <div class="control">
                   <label class="checkbox" style="vertical-align: middle; text-align: center;">
                     <input name="overdue" value="1" type="checkbox" <%= qParams.overdue == 1 ? 'checked' : '' %>>
-                     Overdue
+                    Overdue
                   </label>
                 </div>
               </div>
@@ -113,7 +113,9 @@
           <tr>
             <td><%= index + 1 %></td>
             <td <%= task.completed ? 'class=strikethrough' : '' %>>
-              <%= task.content %>
+              <a href="/task/<%= task._id %>">
+                <%= task.content %>
+              </a>
               <small>(<%= task.subtasks.length %>)</small>
             </td>
             <td><%= task.project ? task.project.name : 'No project specified 😒' %></a></td>
@@ -148,7 +150,7 @@
 </section>
 
 <% tasks.forEach( (task, index) => { -%>
-<!-- add project modal -->
+<!-- subtasks modal -->
 <div id="subtasks-modal-<%= task._id %>" class="subtask-modal modal">
   <div class="modal-background"></div>
   <div class="modal-card">
