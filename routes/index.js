@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const mongoose = require( 'mongoose' );
 const Project = mongoose.model('Project');
+const moment = require('moment');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -15,7 +16,7 @@ router.get('/', (req, res, next) => {
 	.sort("-createdAt").
 	exec(( err, projects, count ) => {
 		res.render( 'project/index', {
-			projects, flash,
+			projects, flash, moment,
 			title : 'All Projects'
 		});
 	});

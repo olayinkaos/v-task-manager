@@ -16,7 +16,7 @@
 								<a href="/task?project=<%= project._id %>">
 									<strong><%= project.name %></strong> 
 								</a>
-								<small><%= project.createdAt %></small> <br>
+								<small><%= moment(project.createdAt).format('MMM Do YYYY, h:mm:ss a') %></small> <br>
 								<%= project.description %>
 							</p>
 						</div>
