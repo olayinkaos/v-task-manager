@@ -40,8 +40,7 @@ Task.pre('save', next => {
 });
 // ====================
 
-
-console.log(url);
+// connect to db
 mongoose.connect(url, {
 	useMongoClient: true
 });
