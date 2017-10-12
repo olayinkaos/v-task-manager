@@ -20,6 +20,7 @@ router.get('/', (req, res, next) => {
 	.populate('project')
 	.sort(sort)
 	.exec(( err, tasks, count ) => {
+		if (err) next;
 		Project.find(( err, projects, count ) => {
 			res.render( 'task/index', {
 				tasks, flash, moment, projects, qParams,
@@ -49,12 +50,8 @@ router.get('/', (req, res, next) => {
 	Task.findById(req.params.id, (err, task) => {
 		task.subtasks.push(params);
 		task.save((err, task, count) => {
-			if(err) {
-				console.log(err);
-				req.flash('errors', err.errors.content);
-			} else {
-				req.flash('success', 'Subtask successfully created!')
-			}
+			if (err) next;
+			req.flash('success', 'Subtask successfully created!');
 			res.redirect("/task");
 		})
 	});
@@ -68,6 +65,7 @@ router.get('/', (req, res, next) => {
 		errors: req.flash('errors')
 	}
 	Project.find(( err, projects, count ) => {
+		if (err) next;
 		res.render( 'task/create', {
 			projects, flash,
 			title : 'Add task'
@@ -83,6 +81,7 @@ router.get('/', (req, res, next) => {
 		errors: req.flash('errors')
 	}
 	Task.findById(req.params.id, (err, task) => {
+		if (err) next;
 		res.render("task/show", { task, flash, moment, title: task.content });
 	});
 })
@@ -90,9 +89,8 @@ router.get('/', (req, res, next) => {
 .get('/:id/edit', (req, res, next) => {
 	Task.findById(req.params.id, (err, task) => {
 		Project.find(( err, projects, count ) => {
-			res.render("task/edit", { 
-				task, projects, moment, title: `Edit ${task.content}` 
-			});
+			if (err) next;
+			res.render("task/edit", { task, projects, moment, title: `Edit ${task.content}` });
 		});
 	});
 })
@@ -102,12 +100,8 @@ router.get('/', (req, res, next) => {
 		let subtask = task.subtasks.id(req.body.subtask_id);
 		subtask.set(req.body);
 		task.save((err, task, count) => {
-			if(err) {
-				console.log(err);
-				req.flash('errors', err.errors.content);
-			} else {
-				req.flash('success', 'Subtask successfully updated!')
-			}
+			if(err) next;
+			req.flash('success', 'Subtask successfully updated!')
 			res.redirect("/task");
 		})
 	});
@@ -121,6 +115,7 @@ router.get('/', (req, res, next) => {
 		task.project = req.body.project;
 		task.updated_at = Date.now();
 		task.save((err, task, count) => {
+			if(err) next;
 			req.flash('info', `Task ${task._id} updated`);
 			res.redirect(`/task`);
 		});
@@ -130,6 +125,7 @@ router.get('/', (req, res, next) => {
 .get('/:id/destroy', (req, res, next) => {
 	Task.findById(req.params.id, (err, task) => {
 		task.remove((err, task) => {
+			if(err) next;
 			req.flash('info', `Task ("${task.content}") has been deleted!`);
 			res.redirect("/task");
 		})
@@ -140,12 +136,8 @@ router.get('/', (req, res, next) => {
 	Task.findById(req.params.id, (err, task) => {
 		task.subtasks.id(req.params.subtaskId).remove();
 		task.save((err, task, count) => {
-			if(err) {
-				console.log(err);
-				req.flash('errors', err.errors.content);
-			} else {
-				req.flash('success', 'Subtask successfully removed!')
-			}
+			if(err) next;
+			req.flash('success', 'Subtask successfully removed!');
 			res.redirect("/task");
 		})
 	});
@@ -164,6 +156,7 @@ router.get('/', (req, res, next) => {
 						project.completed = true;
 					}
 					project.save((err, project) => {
+						if(err) next;
 						req.flash('success', `Task '${task.content}' status changed!`);
 						res.redirect(`/task`);
 					})
@@ -179,6 +172,7 @@ router.get('/', (req, res, next) => {
 		subtask = task.subtasks.id(req.params.subtaskId);
 		subtask.completed = (completed == 'complete' ? true : false);
 		task.save((err, task, count) => {
+			if(err) next;
 			req.flash('success', `Subtask '${subtask.content}' for task '${task.content}' status changed!`);
 			res.redirect(`/task`);
 		});
