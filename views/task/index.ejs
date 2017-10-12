@@ -116,7 +116,7 @@
               <%= task.content %>
               <small>(<%= task.subtasks.length %>)</small>
             </td>
-            <td><%= task.project.name %></a></td>
+            <td><%= task.project ? task.project.name : 'No project specified 😒' %></a></td>
             <td><%= task.priority %></td>
             <td><%= moment(task.dueDate).format('MMM Do YYYY')%></td>
             <td><%= moment(task.createdAt).format('MMM Do YYYY, h:mm:ss a') %></td>
@@ -281,7 +281,7 @@
               <td <%= t.completed ? 'class=strikethrough' : '' %>><%= t.content %></td>
               <td><%= t.priority %></td>
               <td><%= t.dueDate.toLocaleDateString() %></td>
-              <td><%= t._id.getTimestamp() %></td>
+              <td><%= moment(t._id.getTimestamp()).format('MMM Do YYYY, h:mm:ss a') %></td>
               <td>
                 <!-- edit button -->
                 <a href="#" 
