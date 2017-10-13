@@ -55,7 +55,7 @@ router.get('/', (req, res, next) => {
 .post('/:id/subtask', (req, res, next) => {
 	let params = req.body;
 	Task.findById(req.params.id, (err, task) => {
-		let exists = task.subtasks.find(t => t.content == params.content);
+		let exists = task.subtasks.find(t => t.content.toLowerCase() == params.content.toLowerCase());
 		if (exists) {
 			req.flash('error', `Subtask ${exists.content} already exists in this task!`);
 			res.redirect("/task");
