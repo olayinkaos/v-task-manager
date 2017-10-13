@@ -65,7 +65,7 @@ router.get('/', (req, res, next) => {
 		task.save((err, task, count) => {
 			if (err) next;
 			req.flash('success', 'Subtask successfully created!');
-			res.redirect("/task");
+			res.redirect(`/task/${task._id}`);
 		})
 	});
 })
@@ -151,7 +151,7 @@ router.get('/', (req, res, next) => {
 		task.save((err, task, count) => {
 			if(err) next;
 			req.flash('success', 'Subtask successfully removed!');
-			res.redirect("/task");
+			res.redirect(`/task/${task._id}`);
 		})
 	});
 })
@@ -187,7 +187,7 @@ router.get('/', (req, res, next) => {
 		task.save((err, task, count) => {
 			if(err) next;
 			req.flash('success', `Subtask '${subtask.content}' for task '${task.content}' status changed!`);
-			res.redirect(`/task`);
+			res.redirect(`/task/${task._id}`);
 		});
 	});
 });
